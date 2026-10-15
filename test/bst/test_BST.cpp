@@ -143,3 +143,25 @@ TEST(BSTTests, TEST_DELETION_MULTIPLE_CHILDREN_TO_1_RIGHT_CHILD){
     ASSERT_EQ(bst.find(61), nullptr);
 }
 
+TEST(BSTTests, TEST_INSERTION_LARGE_BALANCED_BST){
+    BST<int> bst;
+    vector<int> input = {50, 42, 57, 36, 45, 55, 61, 24, 40, 81, 3, 0, 16};
+    for(int i = 0; i < (int)(input.size()); i++){
+        bst.insert(input[i]);
+    }
+    bst.print(&std::cout);
+    ASSERT_TRUE(bst.insert(41));
+    bst.print(&std::cout);
+}
+
+TEST_F(SmallBSTFixture, TEST_EMPTY_AND_NON_EMPTY_BSTS){
+    ASSERT_FALSE(bst.empty());
+    BST<int> bst2;
+    ASSERT_TRUE(bst2.empty());
+}
+
+TEST_F(SmallBSTFixture, TEST_DELETE_ROOT){
+    ASSERT_TRUE(bst.deleteNode(1));
+    ASSERT_EQ(bst.height(), 2);
+    ASSERT_EQ(bst.size(), 4);
+}

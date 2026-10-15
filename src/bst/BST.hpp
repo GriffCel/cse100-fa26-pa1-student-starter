@@ -301,8 +301,7 @@ class BST {
         if(needed_values.empty()){
             return nullptr;
         }else{
-            data.shrink_to_fit();
-            return create_balanced_bst(data, nullptr);
+            return create_balanced_bst(needed_values, nullptr);
         }
     }
 
@@ -325,8 +324,6 @@ class BST {
      * parent the node that was passed (which should always be the previously created node), then call the function again to create its children.
      * Base case is when there is a single value left in the data, to avoid weird things happening with the iterator-based constructors.
      */
-    //Currently not working properly, given the tree 1->3->5 it balances it into 1<-3->5, but it messes with the size and height, which is weird because the size should only be able to increase
-    //and the height is never modified. Probably the copy constructor is being called.
     BSTNode<Data>* create_balanced_bst(const vector<Data>& ordered_data, BSTNode<Data>* parent_node){
         if(ordered_data.size() == 0){
             return nullptr;
@@ -336,6 +333,7 @@ class BST {
             temp->parent = parent_node;
             temp->left = nullptr;
             temp->right = nullptr;
+            isize++;
             return temp;
         }else{
             int middle_index = ordered_data.size()/2;
