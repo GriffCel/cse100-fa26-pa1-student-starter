@@ -8,7 +8,7 @@
 using namespace std;
 
 /**
- * TODO: add class header
+ * Class defining the creation of Nodes for a Binary Search Tree, their getters and setters, and a successor method.
  */
 template <typename Data>
 class BSTNode {
@@ -20,17 +20,47 @@ class BSTNode {
     BSTNode<Data>* right;
     BSTNode<Data>* parent;
 
-    /** TODO */
-    BSTNode(const Data& d) : data(d) {}
+    /** Initialize a BSTNode with the given data */
+    BSTNode(const Data& d) : data(d) {
+      left = right = parent = nullptr;
+    }
 
     /** Set the value of data */
     void setData(const Data& d) { data = d; }
 
     /** Get the value of data */
-    Data getData() { return data; }
+    Data getData() {
+      if(this == nullptr){
+        return NULL;//This doesn't work because the end iterator calling it will return 0, which will match any data with a value of 0.
+        //Update: Changed the iterator ==/!= to not use * (which returns curr->getData()), so this should be fine. Leaving here as a failsafe though
+      }
+      return data;
+    }
 
-    /** TODO */
-    BSTNode<Data>* successor() { return 0; }
+    /** Returns the node in the BST that is ordered next after the calling node, or null if
+     * the calling node is the end of the BST.
+    */
+    BSTNode<Data>* successor() {
+      BSTNode<Data>* current;
+      if(right == nullptr){
+        current = this;
+        while(current != nullptr){
+          if(current->parent == nullptr){
+            return nullptr;
+          }else if(current != current->parent->left){
+            current = current->parent;
+          }else{
+            return current->parent;
+          }
+        }
+      }else{
+        current = this->right;
+        while(current->left != nullptr){
+          current = current->left;
+        }
+      }
+      return current;
+    }
 };
 
 /**

@@ -41,10 +41,16 @@ class BSTIterator : public iterator<input_iterator_tag, Data> {
     }
 
     /** TODO */
-    bool operator==(BSTIterator<Data> const& other) const { return false; }
+    bool operator==(BSTIterator<Data> const& other) const {
+        return curr == other.curr;
+    }
 
-    /** TODO */
-    bool operator!=(BSTIterator<Data> const& other) const { return false; }
+    /** Kept throwing segmentation faults when accidentally attempting to get the data of a null iterator, so reworked the getData() method to return NULL if called by a nullptr Node.
+     * Could this potentially be related to the segmentation faults being thrown by the destructor?
+    */
+    bool operator!=(BSTIterator<Data> const& other) const {
+        return curr != other.curr;
+    }
 };
 
 #endif  // BSTITERATOR_HPP
